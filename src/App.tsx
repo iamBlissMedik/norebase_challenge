@@ -45,7 +45,7 @@ function App() {
   const handlePageChange = (event: { selected: number }) => {
     setActiveButton(event.selected > currentPage ? "next" : "prev");
     setClickedButton(event.selected > currentPage ? "next" : "prev");
-    setTimeout(() => setClickedButton(null), 500);
+    setTimeout(() => setClickedButton(null), 200);
 
     setCurrentPage(event.selected);
   };

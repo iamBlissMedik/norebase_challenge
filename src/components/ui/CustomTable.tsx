@@ -143,7 +143,7 @@ const CustomTable = ({
           nextLabel="Next →"
           breakLabel={null}
           onPageChange={handlePageChange}
-          pageCount={itemsPerPage}
+          pageCount={pageCount}
           pageRangeDisplayed={0}
           marginPagesDisplayed={0}
           containerClassName="flex items-center justify-between px-4 md:px-6"
@@ -159,7 +159,9 @@ const CustomTable = ({
             ${clickedButton === "prev" && " border-2 border-green-700 "}
           `}
           nextClassName={`  text-sm font-medium
-            rounded-md ${currentPage === pageCount ? "invisible" : ""}   ${
+            rounded-md ${
+              currentPage === pageCount - 1 ? "invisible" : ""
+            }   ${
             activeButton === "next"
               ? " border-2 border-yellow-200 "
               : "border-none"
