@@ -156,14 +156,14 @@ const CustomTable = ({
                 ? " border-2 border-yellow-200 "
                 : "border-none"
             }
-            ${clickedButton === "prev" && " border-2 border-green-600 "}
+            ${clickedButton === "prev" && " border-2 !border-green-700 "}
           `}
           nextClassName={`  text-sm font-semibold
             rounded-md ${currentPage === pageCount - 1 ? "invisible" : ""}   ${
             activeButton === "next"
               ? " border-2 border-yellow-200 "
               : "border-none"
-          } ${clickedButton === "next" && " border-2 border-green-600 "}`}
+          } ${clickedButton === "next" && " border-2 !border-green-700 "}`}
           activeClassName="border border-red-400"
           activeLinkClassName="px-3 py-1 text-blue-500 font-semibold"
           renderOnZeroPageCount={null}
