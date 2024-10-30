@@ -148,7 +148,7 @@ const CustomTable = ({
           marginPagesDisplayed={0}
           containerClassName="flex items-center justify-between px-4 md:px-6"
           previousClassName={`
-             text-sm font-medium
+             text-sm font-semibold
             rounded-md
             ${currentPage === 0 ? "invisible" : ""}
             ${
@@ -158,10 +158,8 @@ const CustomTable = ({
             }
             ${clickedButton === "prev" && " border-2 border-green-700 "}
           `}
-          nextClassName={`  text-sm font-medium
-            rounded-md ${
-              currentPage === pageCount - 1 ? "invisible" : ""
-            }   ${
+          nextClassName={`  text-sm font-semibold
+            rounded-md ${currentPage === pageCount - 1 ? "invisible" : ""}   ${
             activeButton === "next"
               ? " border-2 border-yellow-200 "
               : "border-none"
