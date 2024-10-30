@@ -1,4 +1,3 @@
-
 import ReactPaginate from "react-paginate";
 import { headerMapping, ValidHeader } from "../../types/mobileHeader";
 import { ICoinData } from "../../types/coindata";
@@ -10,6 +9,7 @@ interface CustomTableProps {
   handlePageChange: (selected: { selected: number }) => void;
   currentPage: number;
   activeButton: "prev" | "next" | null;
+  clickedButton: "prev" | "next" | null;
   totalCoins: number;
 }
 
@@ -22,6 +22,7 @@ const CustomTable = ({
   activeButton,
   currentPage,
   totalCoins,
+  clickedButton,
 }: CustomTableProps) => {
   const pageCount = Math.ceil(totalCoins / itemsPerPage);
   // Calculate the midpoint for splitting headers
@@ -155,14 +156,15 @@ const CustomTable = ({
                 ? " border-2 border-yellow-200 "
                 : "border-none"
             }
+            ${clickedButton === "prev" && " border-2 border-green-700 "}
           `}
           nextClassName={`  text-sm font-medium
             rounded-md ${currentPage === pageCount ? "invisible" : ""}   ${
             activeButton === "next"
               ? " border-2 border-yellow-200 "
               : "border-none"
-          }`}
-          activeClassName="border border-blue-500"
+          } ${clickedButton === "next" && " border-2 border-green-700 "}`}
+          activeClassName="border border-red-400"
           activeLinkClassName="px-3 py-1 text-blue-500 font-semibold"
           renderOnZeroPageCount={null}
           pageClassName="hidden"
