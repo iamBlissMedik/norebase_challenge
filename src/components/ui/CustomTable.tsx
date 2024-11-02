@@ -1,9 +1,7 @@
 import ReactPaginate from "react-paginate";
-import { headerMapping, ValidHeader } from "../../types/mobileHeader";
-import { ICoinData } from "../../types/coindata";
-interface CustomTableProps {
-  headers: readonly ValidHeader[];
-  coins: ICoinData[];
+interface CustomTableProps<T extends Record<string, any>> {
+  headers: string[];
+  coins: T[];
   itemsPerPage: number;
   width: number;
   handlePageChange: (selected: { selected: number }) => void;
@@ -11,9 +9,10 @@ interface CustomTableProps {
   activeButton: "prev" | "next" | null;
   clickedButton: "prev" | "next" | null;
   totalCoins: number;
+  headerKeyMap: { [key: string]: keyof T };
 }
 
-const CustomTable = ({
+const CustomTable = <T extends Record<string, any>>({
   headers,
   coins,
   itemsPerPage,
@@ -23,10 +22,9 @@ const CustomTable = ({
   currentPage,
   totalCoins,
   clickedButton,
-}: CustomTableProps) => {
+  headerKeyMap,
+}: CustomTableProps<T>) => {
   const pageCount = Math.ceil(totalCoins / itemsPerPage);
-  // Calculate the midpoint for splitting headers
-  const midIndex = Math.ceil(headers.length / 2);
   return (
     <div
       className={`md:w-[${width}px] md:max-w-[${width}px] shadow-2xl  h-fit pb-3 bg-white rounded-lg`}
@@ -44,41 +42,29 @@ const CustomTable = ({
             </tr>
           </thead>
           <tbody>
-            {coins.map((row) => (
+            {coins.map((row, rowIndex) => (
               <tr
-                key={row.id}
+                key={rowIndex}
                 className="odd:bg-gray-200 even:bg-white text-gray-800"
               >
-                <td
-                  className={`px-6 py-4 border-b align-top max-w-[${
-                    width / headers.length
-                  }px]`}
-                >
-                  <div className=" break-words">{row.name}</div>
-                </td>
-                <td
-                  className={`px-6 py-4 border-b align-top max-w-[${
-                    width / headers.length
-                  }px]`}
-                >
-                  <div className=" break-words">{row.symbol}</div>
-                </td>
-                <td
-                  className={`px-6 py-4 border-b align-top max-w-[${
-                    width / headers.length
-                  }px]`}
-                >
-                  <div className=" break-words">${row.price_usd}</div>
-                </td>
-                <td
-                  className={`px-6 py-4 border-b align-top max-w-[${
-                    width / headers.length
-                  }px]`}
-                >
-                  <div className=" break-words ">
-                    {row.tsupply} {row.symbol}
-                  </div>
-                </td>
+                {headers.map((header) => (
+                  <td
+                    key={header}
+                    className={`px-6 py-4 border-b align-top max-w-[${
+                      width / headers.length
+                    }px]`}
+                  >
+                    <div className="break-words">
+                      {header === "📉 Total Supply"
+                        ? `${row[headerKeyMap["📉 Total Supply"]]} ${
+                            row.symbol
+                          }`
+                        : header === "🤑 Price"
+                        ? `$${row[headerKeyMap["🤑 Price"]]}`
+                        : row[headerKeyMap[header]]}
+                    </div>
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
@@ -91,46 +77,25 @@ const CustomTable = ({
       >
         {coins.map((row) => (
           <div key={row.id} className=" p-4 odd:bg-gray-200 even:bg-white ">
-            <div className="grid gap-2 h-full w-full">
-              {/* Top section */}
-              <div className="flex justify-between gap-1 w-full">
-                {headers.slice(0, midIndex).map((header) => {
-                  const value =
-                    typeof headerMapping[header] === "function"
-                      ? headerMapping[header](row) // Call function for custom formatting
-                      : row[headerMapping[header]]; // Directly access row data
-
-                  return (
-                    <div
-                      key={header}
-                      className={`max-w-[${width / 2}px] w-1/2`}
-                    >
-                      <div className="font-semibold text-black">{header}:</div>
-                      <div className="text-gray-800 break-words">{value}</div>
+            <div className="grid grid-cols-2 gap-2 h-full w-full">
+              {headers.map((header) => (
+                <div key={header}>
+                  <div>
+                    <div className=" font-semibold text-gray-800">
+                      {header}:
                     </div>
-                  );
-                })}
-              </div>
-
-              {/* Bottom section */}
-              <div className="flex justify-between gap-1  w-full">
-                {headers.slice(midIndex).map((header) => {
-                  const value =
-                    typeof headerMapping[header] === "function"
-                      ? headerMapping[header](row) // Call function for custom formatting
-                      : row[headerMapping[header]]; // Directly access row data
-
-                  return (
-                    <div
-                      key={header}
-                      className={`max-w-[${width / 2}px] w-1/2 `}
-                    >
-                      <div className="font-semibold text-black">{header}:</div>
-                      <div className="text-gray-800 break-words ">{value}</div>
+                    <div>
+                      {header === "📉 Total Supply"
+                        ? `${row[headerKeyMap["📉 Total Supply"]]} ${
+                            row.symbol
+                          }`
+                        : header === "🤑 Price"
+                        ? `$${row[headerKeyMap["🤑 Price"]]}`
+                        : row[headerKeyMap[header]]}
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         ))}

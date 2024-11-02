@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/ui/customtable.tsx","./src/constants/apiconstants.ts","./src/services/axiosinstance.ts","./src/services/tickers.ts","./src/types/coindata.ts","./src/types/tablemobileheader.ts","./src/utils/globalutils.ts","./src/utils/serviceutils.ts"],"version":"5.6.3"}
