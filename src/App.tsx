@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
 import CustomTable from "./components/ui/CustomTable";
-import { ValidHeader } from "./types/mobileHeader";
 import { getTickersApiService } from "./services/tickers";
 import { ICoinData, ICoinDataResponse } from "./types/coindata";
-const headers: ValidHeader[] = [
-  "💰 Coin",
-  "📄 Code",
-  "🤑 Price",
-  "📉 Total Supply",
-];
-
+import { coinHeaderKeyMap } from "./types/tableMobileHeader";
+const coinHeaders = ["💰 Coin", "📄 Code", "🤑 Price", "📉 Total Supply"];
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [activeButton, setActiveButton] = useState<"prev" | "next" | null>(
@@ -57,7 +51,7 @@ function App() {
       {coins && (
         <div className="w-full pt-5 flex justify-center h-screen overflow-auto py-4 bg-gray-200">
           <CustomTable
-            headers={headers}
+            headers={coinHeaders}
             coins={coins}
             width={700}
             itemsPerPage={PAGE_LIMIT}
@@ -66,6 +60,7 @@ function App() {
             totalCoins={totalCoins}
             activeButton={activeButton}
             clickedButton={clickedButton}
+            headerKeyMap={coinHeaderKeyMap}
           />
         </div>
       )}
