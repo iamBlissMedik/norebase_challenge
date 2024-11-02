@@ -18,12 +18,12 @@ function App() {
         <div className="w-full pt-5 flex justify-center h-screen overflow-auto py-4 bg-gray-200">
           <CustomTable
             headers={coinHeaders}
-            coins={coins}
+            tableData={coins}
             width={700}
             itemsPerPage={PAGE_LIMIT}
             handlePageChange={handlePageChange}
             currentPage={currentPage}
-            totalCoins={totalCoins}
+            totalTableData={totalCoins}
             activeButton={activeButton}
             clickedButton={clickedButton}
             headerKeyMap={coinHeaderKeyMap}
